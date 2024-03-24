@@ -13,8 +13,6 @@ import pygame
 
 pygame.init()
 
-
-
 #   Declaration of global variables 
  # Constant
 SCREEN_WIDTH, SCREEN_HEIGHT = (1000, 800) # Dynamic behavior for easiest calculations  
@@ -27,52 +25,30 @@ PURPLE = (128, 0, 128)
  # ≠Constant 
 # Setup of my game
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT)) # Set the diplay's size or my game
-screen.fill(CYAN)
+screen.fill(CYAN) # Set the background color to cyan
 pygame.display.set_caption("Rock, Paper, Scissors") # Set the windows'title 
 clock = pygame.time.Clock() # Controlling the frame rate despite the computer capabilites
 
-# Top part
-font = pygame.font.Font('assets/fonts/Oswald-Regular.ttf', 45) # Controll the font of my header
-text = font.render('Rock, Paper, Scissors Game', True, BLACK, CYAN) # Controll the content of my header
-textRect = text.get_rect()
-textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 5.5) # Controll the emplacement of my element
-screen.blit(text, textRect) # Put my header (regular surface) on my surface
-
-
-input_box = pygame.Rect(SCREEN_WIDTH - 150, SCREEN_HEIGHT // 2 - 25, 300, 50)
-input_text = ''
-input_active = True
-instruction_font = pygame.font.Font(None, 30)
-instruction_text1 = instruction_font.render('Welcome to Rock, Paper, Scissors Game!', True, BLACK)
-instruction_text2 = instruction_font.render('Enter the winning score below and start playing.', True, BLACK)
-instruction_text3 = instruction_font.render('Press Enter to confirm your winning score.', True, BLACK)
-instruction_rect1 = instruction_text1.get_rect()
-instruction_rect2 = instruction_text2.get_rect()
-instruction_rect3 = instruction_text3.get_rect()
-instruction_rect1.midtop = (screen.get_width() // 2, textRect.bottom + 30)
-instruction_rect2.midtop = (screen.get_width() // 2, instruction_rect1.bottom + 10)
-instruction_rect3.midtop = (screen.get_width() // 2, instruction_rect2.bottom + 10)
-screen.blit(instruction_text1, instruction_rect1)
-screen.blit(instruction_text2, instruction_rect2)
-screen.blit(instruction_text3, instruction_rect3)
-input_box = pygame.Rect(screen.get_width() // 2 - 150, screen.get_height() // 2 - 25, 300, 50)
-input_text = ''
-input_active = True
-pygame.draw.rect(screen, CYAN, input_box)
-font_input = pygame.font.Font(None, 32)
-input_surface = font_input.render(input_text, True, BLACK)
-screen.blit(input_surface, (input_box.x + 5, input_box.y + 5))
-pygame.draw.rect(screen, CYAN, input_box)
-font_input = pygame.font.Font(None, 32)
-input_surface = font_input.render(input_text, True, BLACK)
-screen.blit(input_surface, (input_box.x + 5, input_box.y + 5))
-win_score = 0
-uscore = 0
-cscore = 0
+win_score = uscore = cscore = 0
 score_text = f"Winning Score: {win_score} | Your Score: {uscore} | Computer's Score: {cscore}"
-score_surface = instruction_font.render(score_text, True, BLACK)
-score_rect = score_surface.get_rect(midtop=(screen.get_width() // 2, instruction_rect3.bottom + 30))
-screen.blit(score_surface, score_rect)
+input_text = ''
+
+font = pygame.font.Font('assets/fonts/Oswald-Regular.ttf', 45) # Controll the font of my header
+instruction_font = font_input = pygame.font.Font(None, 30)
+
+instruction_text1, instruction_text2, instruction_text3, text, score_surface, input_surface = instruction_font.render('Welcome to Rock, Paper, Scissors Game!', True, BLACK), instruction_font.render('Enter the winning score below and start playing.', True, BLACK), instruction_font.render('Press Enter to confirm your winning score.', True, BLACK), font.render('Rock, Paper, Scissors Game', True, BLACK, CYAN), instruction_font.render(score_text, True, BLACK), font_input.render(input_text, True, BLACK)
+
+input_box = pygame.Rect(SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 - 25, 300, 50)
+
+textRect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 5.5))# Object rect more effectiveness
+instruction_rect1 = instruction_text1.get_rect(midtop=(SCREEN_WIDTH // 2, textRect.bottom + 30))
+instruction_rect2 = instruction_text2.get_rect(midtop=(SCREEN_WIDTH // 2, instruction_rect1.bottom + 10))
+instruction_rect3 = instruction_text3.get_rect(midtop=(SCREEN_WIDTH // 2, instruction_rect2.bottom + 10))
+score_rect = score_surface.get_rect(midtop=(SCREEN_WIDTH // 2, instruction_rect3.bottom + 30))
+
+screen.blits(((instruction_text1, instruction_rect1),(instruction_text2, instruction_rect2), (instruction_text3, instruction_rect3), (text, textRect), (score_surface, score_rect), (input_surface, input_box)))
+
+input_active = True
 
 # Logic of the code
 
